@@ -1,0 +1,14 @@
+test:
+  adapter: postgresql
+  database: gitcryo_test
+  usename: postgres
+
+development:
+  adapter: postgresql
+  database: gitcryo_test
+  usename: postgres
+
+production:
+  adapter: postgresql
+  database: gitcryo_test
+  usename: postgres
