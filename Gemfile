@@ -9,6 +9,9 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'thin'
 gem 'unicorn'
+gem 'octokit'
+gem 'omniauth-github'
+gem 'devise'
 
 group :development, :test do
   gem 'awesome_print'
@@ -19,4 +22,5 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'quiet_assets'
 end
