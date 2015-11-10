@@ -5,3 +5,11 @@
 <% else %>
   <%= link_to "Sign In", new_user_session_path %>
 <% end %>
+
+<table>
+  <% @repos.each do |repo| %>
+    <tr>
+      <td><%= repo.name %></td>
+    </tr>
+  <% end %>
+</table>
