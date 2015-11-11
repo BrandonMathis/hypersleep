@@ -12,6 +12,7 @@ gem 'unicorn'
 gem 'octokit'
 gem 'omniauth-github'
 gem 'devise'
+gem 'faraday-http-cache'
 
 group :development, :test do
   gem 'awesome_print'
