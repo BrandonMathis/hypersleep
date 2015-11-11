@@ -3,6 +3,12 @@ Rails.application.routes.draw do
 
   get "/auth/:provider/callback" => 'authentications#create'
   get "/auth/failure" => "authentications#failure"
-  get '/github/repos', to: 'github#repos'
-  root 'github#repos'
+
+  root 'repos#index'
+
+  resources :repos do
+    collection do
+      post "/:user/:name/clone", action: :clone, as: :clone
+    end
+  end
 end
