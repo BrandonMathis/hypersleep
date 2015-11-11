@@ -4,7 +4,6 @@
 
 <% if current_user %>
   Hello <%= current_user.email %>
-  <br/>
   <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to "Sign In", new_user_session_path %>
@@ -14,8 +13,8 @@
   <table>
     <% @repos.each do |repo| %>
       <tr>
-        <td><%= link_to 'Suspend', clone_repos_path(name: repo.name, user: repo.owner.login), method: :post %></td>
-        <td><%= repo.name %></td>
+        <td><%= link_to 'Suspend', suspend_repos_path(name: repo.name, owner: repo.owner.login), method: :post %></td>
+        <td><%= link_to repo.name, repo.html_url %></td>
       </tr>
     <% end %>
   </table>

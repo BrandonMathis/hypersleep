@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :repos do
     collection do
-      post "/:user/:name/clone", action: :clone, as: :clone
+      post "/:owner/:name/suspend", action: :suspend, as: :suspend
     end
   end
 end

@@ -6,9 +6,13 @@ class ReposController < ApplicationController
     end
   end
 
-  def clone
-    repo = client.repo("#{params[:user]}/#{params[:name]}")
-    flash[:notice] = repo.clone_url
+  def suspend
+    repo = Repo.where(
+      user: current_user,
+      owner: params[:owner],
+      name: params[:name]
+    ).first_or_create(suspended: true)
+    repo.clone
     redirect_to repos_path
   end
 
