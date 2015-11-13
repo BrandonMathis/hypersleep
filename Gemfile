@@ -13,6 +13,7 @@ gem 'octokit'
 gem 'omniauth-github'
 gem 'devise'
 gem 'faraday-http-cache'
+gem 'aws-sdk'
 
 group :development, :test do
   gem 'awesome_print'

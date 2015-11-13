@@ -5,7 +5,6 @@ class CreateRepos < ActiveRecord::Migration
       t.string :owner
       t.boolean :suspended
       t.string :path
-      t.references :user
 
       t.timestamps null: false
     end

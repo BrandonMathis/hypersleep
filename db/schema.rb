@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20151111185219) do
     t.string   "owner"
     t.boolean  "suspended"
     t.string   "path"
-    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

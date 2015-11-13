@@ -7,12 +7,12 @@ class ReposController < ApplicationController
   end
 
   def suspend
-    repo = Repo.where(
-      user: current_user,
+    chamber = Stasis::Chamber.new(
       owner: params[:owner],
-      name: params[:name]
-    ).first_or_create(suspended: true)
-    repo.clone
+      name: params[:name],
+      token: current_user.github_token
+    )
+    chamber.activate
     redirect_to repos_path
   end
 
