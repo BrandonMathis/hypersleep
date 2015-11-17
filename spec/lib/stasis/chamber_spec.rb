@@ -18,5 +18,11 @@ describe Stasis::Chamber do
       expect(subject).to receive(:upload_repo_to_s3)
       subject.suspend_subject
     end
+
+    it 'will not leave tar files behind' do
+      subject.suspend_subject
+      expect(Dir.exist?('tmp/someone/some_repo')).to eq false
+      expect(File.exist?('tmp/someone/some_repo.tar.gz')).to eq false
+    end
   end
 end

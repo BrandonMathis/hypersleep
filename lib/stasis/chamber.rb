@@ -29,7 +29,7 @@ module Stasis
     end
 
     def tar_file
-      "tmp/#{name}#{compression_format}"
+      "#{clone_path}#{compression_format}"
     end
 
     def full_name
@@ -37,7 +37,7 @@ module Stasis
     end
 
     def cleanup
-      FileUtils.rm_rf(clone_path)
+      FileUtils.rmdir(clone_path)
       FileUtils.rm_rf(tar_file)
     end
 
