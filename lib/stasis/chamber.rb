@@ -7,29 +7,61 @@ module Stasis
       @name = name
     end
 
-
-    def activate
+    def suspend_subject
       clone_repo_from_github
       Repo.where(
         owner: owner,
         name: name
       ).first_or_create(suspended: true)
-      upload_to_s3
+      compress_repo
+      upload_repo_to_s3
+      cleanup
+    end
+
+    def revive_subject
+
     end
 
     private
 
-    def cleanup
-      File.rm_rf(clone_path)
+    def compression_format
+      '.tar.gz'
     end
 
-    def upload_to_s3
-      tar_file = clone_repo_from_github
-      `tar cvzf #{name}.tar.gz #{clone_path}`
-      # TODO Acutally get this working
-      obj = s3.bucket('bucket-name').object('key')
-      obj.upload_file('/source/file/path', acl:'public-read')
-      obj.public_url
+    def tar_file
+      "tmp/#{name}#{compression_format}"
+    end
+
+    def full_name
+      owner + '/' + name
+    end
+
+    def cleanup
+      FileUtils.rm_rf(clone_path)
+      FileUtils.rm_rf(tar_file)
+    end
+
+    def compress_repo
+      `tar cvzf #{tar_file} #{clone_path} > /dev/null 2>&1`
+    end
+
+    def upload_repo_to_s3
+      File.open(tar_file, 'rb') do |file|
+        S3_CLIENT.put_object(
+          acl: 'private',
+          bucket: 'sb-github-repos',
+          key: s3_key,
+          body: file
+        )
+      end
+    end
+
+    def s3_key
+      full_name + compression_format
+    end
+
+    def download_from_s3
+      s3_object.get(response_target: tar_file)
     end
 
     def clone_repo_from_github
@@ -40,10 +72,6 @@ module Stasis
       Dir.mkdir('tmp') unless Dir.exists?('tmp')
       Dir.mkdir("tmp/#{owner}") unless Dir.exists?("tmp/#{owner}")
       "tmp/#{full_name}"
-    end
-
-    def full_name
-      owner + '/' + name
     end
   end
 end

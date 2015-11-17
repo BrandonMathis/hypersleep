@@ -1,8 +1,17 @@
-s3 = Aws::S3::Resource.new(
-  credentials: Aws::Credentials.new('akid', 'secret'),
-  region: 'us-west-1'
+credentials = Aws::Credentials.new(
+  Rails.application.secrets.s3['access_key_id'],
+  Rails.application.secrets.s3['secret_access_key']
 )
- 
-obj = s3.bucket('bucket-name').object('key')
-obj.upload_file('/source/file/path', acl:'public-read')
-obj.public_url
+
+if Rails.env.test?
+  S3_CLIENT = Aws::S3::Client.new(
+    region: 'us-east-1',
+    credentials: credentials,
+    stub_responses: true
+  )
+else
+  S3_CLIENT = Aws::S3::Client.new(
+    region: 'us-east-1',
+    credentials: credentials
+  )
+end

@@ -13,12 +13,13 @@ gem 'octokit'
 gem 'omniauth-github'
 gem 'devise'
 gem 'faraday-http-cache'
-gem 'aws-sdk'
+gem 'aws-sdk', '~> 2'
 
 group :development, :test do
   gem 'awesome_print'
   gem 'pry-byebug'
   gem 'rspec-rails'
+  gem 'webmock'
 end
 
 group :development do
