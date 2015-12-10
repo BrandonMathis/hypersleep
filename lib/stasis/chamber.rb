@@ -19,7 +19,6 @@ module Stasis
     end
 
     def revive_subject
-
     end
 
     private
