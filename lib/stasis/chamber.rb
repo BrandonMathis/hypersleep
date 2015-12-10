@@ -5,16 +5,17 @@ module Stasis
     def initialize(owner:, name:, token:)
       @owner = owner
       @name = name
+      @token = token
     end
 
     def suspend_subject
       clone_repo_from_github
-      Repo.where(
-        owner: owner,
-        name: name
-      ).first_or_create(suspended: true)
       compress_repo
       upload_repo_to_s3
+      SuspendedRepo.where(
+        owner: owner,
+        name: name
+      ).first_or_create
       cleanup
     end
 

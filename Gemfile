@@ -18,12 +18,12 @@ gem 'aws-sdk', '~> 2'
 group :development, :test do
   gem 'awesome_print'
   gem 'pry-byebug'
-  gem 'rspec-rails'
-  gem 'webmock'
-end
-
-group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'quiet_assets'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'webmock'
 end

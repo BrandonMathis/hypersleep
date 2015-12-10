@@ -11,10 +11,21 @@
 
 <% if current_user %>
   <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Repos</th>
+      </tr>
+    </thead>
     <% @repos.each do |repo| %>
       <tr>
-        <td><%= link_to 'Suspend', suspend_repos_path(name: repo.name, owner: repo.owner.login), method: :post %></td>
-        <td><%= link_to repo.name, repo.html_url %></td>
+        <% if repo.suspended? %>
+          <td><%= link_to 'Reanimate', '#' %></td>
+        <% else %>
+          <td><%= link_to 'Suspend', suspend_repos_path(name: repo.name, owner: repo.owner.login), method: :post %></td>
+        <% end %>
+        <td><%= link_to repo.full_name, repo.html_url %></td>
+        <td>Last updated <%= distance_of_time_in_words(Time.now, repo.pushed_at.to_time) %></td>
       </tr>
     <% end %>
   </table>

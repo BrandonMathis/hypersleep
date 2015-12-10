@@ -2,7 +2,8 @@ class ReposController < ApplicationController
   def index
     if current_user
       Octokit.auto_paginate = true
-      @repos = client.org_repos('smashingboxes', type: :private)
+      octokit_repos = client.repos(nil, type: :private).sort_by{ |r| r.pushed_at.to_time }
+      @repos = octokit_repos.map { |r| Repo.new(r) }
     end
   end
 
@@ -12,7 +13,7 @@ class ReposController < ApplicationController
       name: params[:name],
       token: current_user.github_token
     )
-    chamber.activate
+    chamber.suspend_subject
     redirect_to repos_path
   end
 

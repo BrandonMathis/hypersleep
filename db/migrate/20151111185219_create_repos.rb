@@ -1,6 +1,6 @@
 class CreateRepos < ActiveRecord::Migration
   def change
-    create_table :repos do |t|
+    create_table :suspended_repos do |t|
       t.string :name
       t.string :owner
       t.boolean :suspended
