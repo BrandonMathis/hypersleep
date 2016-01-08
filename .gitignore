@@ -18,3 +18,4 @@
 vendor/ruby
 
 config/database.yml
+.ruby-version
