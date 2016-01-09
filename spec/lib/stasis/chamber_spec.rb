@@ -11,7 +11,7 @@ describe Stasis::Chamber do
     it 'persists a repo' do
       expect{
         subject.suspend_subject
-      }.to change{ Repo.count }.by(1)
+      }.to change{ SuspendedRepo.count }.by(1)
     end
 
     it 'will upload the directory to s3' do

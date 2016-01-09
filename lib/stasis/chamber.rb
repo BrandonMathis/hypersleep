@@ -47,12 +47,7 @@ module Stasis
 
     def upload_repo_to_s3
       File.open(tar_file, 'rb') do |file|
-        S3_CLIENT.put_object(
-          acl: 'private',
-          bucket: 'sb-github-repos',
-          key: s3_key,
-          body: file
-        )
+        S3.new(client: S3_CLIENT).put(file, s3_key)
       end
     end
 
