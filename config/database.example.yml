@@ -1,14 +1,14 @@
 test:
   adapter: postgresql
-  database: gitcryo_test
+  database: hypersleep_test
   usename: postgres
 
 development:
   adapter: postgresql
-  database: gitcryo_test
+  database: hypersleep_development
   usename: postgres
 
 production:
   adapter: postgresql
-  database: gitcryo_test
+  database: hypersleep_production
   usename: postgres
