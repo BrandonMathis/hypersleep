@@ -16,8 +16,11 @@ gem 'omniauth-github'
 gem 'devise'
 gem 'faraday-http-cache'
 gem 'aws-sdk', '~> 2'
+gem 'sidekiq'
+gem 'sinatra', require: nil
 
 group :development, :test do
+  gem 'pry-rails'
   gem 'awesome_print'
   gem 'pry-byebug'
   gem 'web-console', '~> 2.0'

@@ -20,9 +20,13 @@
     <% @repos.each do |repo| %>
       <tr>
         <% if repo.suspended? %>
-          <td><%= link_to 'Reanimate', '#' %></td>
+          <% if repo.finished_processing? %>
+            <td><%= link_to 'Download', download_repo_path(repo.id) %></td>
+          <% else %>
+            <td><%= link_to 'Processing', '#' %></td>
+          <% end %>
         <% else %>
-          <td><%= link_to 'Suspend', suspend_repos_path(name: repo.name, owner: repo.owner.login), method: :post %></td>
+          <td><%= link_to 'Suspend', suspend_repos_path(name: repo.name, owner: repo.owner.login), method: :post, onclick: 'clickAndDisable(this);' %></td>
         <% end %>
         <td><%= link_to repo.full_name, repo.html_url %></td>
         <td>Last updated <%= distance_of_time_in_words(Time.now, repo.pushed_at.to_time) %></td>

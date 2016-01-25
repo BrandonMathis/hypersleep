@@ -1,6 +1,6 @@
 module Stasis
   class Chamber
-    attr_reader :owner, :name
+    attr_reader :owner, :name, :token
 
     def initialize(owner:, name:, token:)
       @owner = owner
@@ -8,21 +8,35 @@ module Stasis
       @token = token
     end
 
+    def schedule_for_suspension
+      Stasis::Worker.perform_async(owner, name, token)
+      mark_suspended
+    end
+
     def suspend_subject
       clone_repo_from_github
       compress_repo
       upload_repo_to_s3
-      SuspendedRepo.where(
-        owner: owner,
-        name: name
-      ).first_or_create
+      mark_suspended
       cleanup
     end
 
-    def revive_subject
+    def mark_suspended
+      suspended_repo_query.first_or_create(s3_key: s3_key)
+    end
+
+    def suspended?
+      suspended_repo.present?
     end
 
     private
+    def suspended_repo
+      suspended_repo_query.first
+    end
+
+    def suspended_repo_query
+      SuspendedRepo.where(owner: owner, name: name)
+    end
 
     def compression_format
       '.tar.gz'
@@ -42,7 +56,7 @@ module Stasis
     end
 
     def compress_repo
-      `tar cvzf #{tar_file} #{clone_path} > /dev/null 2>&1`
+      `tar cvzf #{tar_file} -C tmp/#{owner} #{name} > /dev/null 2>&1`
     end
 
     def upload_repo_to_s3

@@ -13,8 +13,12 @@ class ReposController < ApplicationController
       name: params[:name],
       token: current_user.github_token
     )
-    chamber.suspend_subject
+    chamber.schedule_for_suspension unless chamber.suspended?
     redirect_to repos_path
+  end
+
+  def download
+    redirect_to SuspendedRepo.find(params[:id]).url
   end
 
   private
