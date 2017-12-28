@@ -74,6 +74,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    dotenv (2.2.1)
     erubis (2.7.0)
     eventmachine (1.0.8)
     execjs (2.6.0)
@@ -251,6 +252,7 @@ DEPENDENCIES
   aws-sdk (~> 2)
   coffee-rails (~> 4.1.0)
   devise
+  dotenv
   faraday-http-cache
   jquery-rails
   octokit
@@ -271,5 +273,8 @@ DEPENDENCIES
   web-console (~> 2.0)
   webmock
 
+RUBY VERSION
+   ruby 2.3.0p0
+
 BUNDLED WITH
-   1.11.2
+   1.16.1

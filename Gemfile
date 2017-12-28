@@ -18,6 +18,7 @@ gem 'faraday-http-cache'
 gem 'aws-sdk', '~> 2'
 gem 'sidekiq'
 gem 'sinatra', require: nil
+gem 'dotenv'
 
 group :development, :test do
   gem 'pry-rails'
